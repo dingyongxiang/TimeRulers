@@ -60,28 +60,14 @@ public class TimeRulerView extends View {
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         int width;
         int height;
-        if (widthMode == MeasureSpec.EXACTLY) {
-            width = widthSize;
-        } else {
-            mPaint.setTextSize(mTitleTextSize);
-            mPaint.getTextBounds(mTitle, 0, mTitle.length(), mBounds);
-            float textWidth = mBounds.width();
-            int desired = (int) (getPaddingLeft() + textWidth + getPaddingRight());
-            width = desired;
+        if (widthMode == MeasureSpec.AT_MOST && heightMode == MeasureSpec.AT_MOST) {
+            setMeasuredDimension(200, 200);
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            setMeasuredDimension(200, heightSize);
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            setMeasuredDimension(widthSize, 200);
         }
 
-        if (heightMode == MeasureSpec.EXACTLY) {
-            height = heightSize;
-        } else {
-            mPaint.setTextSize(mTitleTextSize);
-            mPaint.getTextBounds(mTitle, 0, mTitle.length(), mBounds);
-            float textHeight = mBounds.height();
-            int desired = (int) (getPaddingTop() + textHeight + getPaddingBottom());
-            height = desired;
-        }
-
-
-        setMeasuredDimension(width, height);
     }
 
     @Override
