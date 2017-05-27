@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import timerulers.yongxiang.com.timerulerslib.views.RecordDataExistTimeSegment;
@@ -21,6 +23,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView currentTimeTextView;
     private ImageView zoomInButton, zoomOutButton;
     private TimebarView mTimebarView;
+
+    private Button mDayBt;
+    private Button mHourBt;
+    private Button mMinuteBt;
     private int recordDays = 7;
     private long currentRealDateTime = System.currentTimeMillis();
     private Calendar calendar;
@@ -40,9 +46,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentTimeTextView = (TextView) findViewById(R.id.current_time_tv);
         zoomInButton = (ImageView) findViewById(R.id.timebar_zoom_in_btn);
         zoomOutButton = (ImageView) findViewById(R.id.timebar_zoom_out_btn);
+        mDayBt = (Button) findViewById(R.id.day);
+        mHourBt = (Button) findViewById(R.id.hour);
+        mMinuteBt = (Button) findViewById(R.id.minute);
 
         zoomInButton.setOnClickListener(this);
         zoomOutButton.setOnClickListener(this);
+        mDayBt.setOnClickListener(this);
+        mHourBt.setOnClickListener(this);
+        mMinuteBt.setOnClickListener(this);
 
         calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -64,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 timebarRightEndPointTime - 1000, currentRealDateTime);
 
         List<RecordDataExistTimeSegment> recordDataList = new ArrayList<>();
-        recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 3));
+        recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime - ONE_HOUR_IN_MS * 1, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 3));
         recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 4, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 8));
         recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 12, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 19));
         recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 20, timebarRightEndPointTime));
@@ -99,6 +111,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "onBarScaleFinish()");
             }
         });
+
+
+        Date d = new Date(1495818022L * 1000l);
+        String texttime = zeroTimeFormat.format(d);
+
+        Log.d(TAG, "NOWTIME:" + texttime);
+
     }
 
     @Override
@@ -116,6 +135,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.timebar_zoom_out_btn:
                 mTimebarView.scaleByPressingButton(false);
+                break;
+            case R.id.day:
+                mTimebarView.setMode(3);
+                break;
+            case R.id.hour:
+                mTimebarView.setMode(2);
+                break;
+            case R.id.minute:
+                mTimebarView.setMode(1);
                 break;
             default:
                 break;

@@ -82,7 +82,7 @@ public class TimebarView extends View {
 
     private int timebarTickCriterionCount = 5;
 
-    private int currentTimebarTickCriterionIndex;
+    private int currentTimebarTickCriterionIndex = 3;
 
     private List<RecordDataExistTimeSegment> recordDataExistTimeClipsList = new ArrayList<>();
 
@@ -112,6 +112,7 @@ public class TimebarView extends View {
 
     private Calendar calendar;
 
+
     private SimpleDateFormat zeroTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
@@ -127,6 +128,8 @@ public class TimebarView extends View {
     private int ZOOMMIN = 1;
 
     private static final int MOVEING = 0x001;
+
+    private int idTag;
 
 
     Handler handler = new Handler(new Handler.Callback() {
@@ -354,6 +357,55 @@ public class TimebarView extends View {
 
     }
 
+    public void setMode(int scalMode) {
+        if (scalMode < ZOOMMIN || scalMode > ZOOMMAX || scalMode == currentTimebarTickCriterionIndex)
+            return;
+
+        switch (scalMode) {
+            case 0:
+                setCurrentTimebarTickCriterionIndex(0);
+                int newWidth = timebarTickCriterionMap.get(0).getViewLength();
+                justScaledByPressingButton = true;
+                ViewGroup.LayoutParams params = getLayoutParams();
+                params.width = newWidth;
+                setLayoutParams(params);
+                break;
+            case 1:
+                setCurrentTimebarTickCriterionIndex(1);
+                int newWidth1 = timebarTickCriterionMap.get(1).getViewLength();
+                justScaledByPressingButton = true;
+                ViewGroup.LayoutParams params1 = getLayoutParams();
+                params1.width = newWidth1;
+                setLayoutParams(params1);
+                break;
+            case 2:
+                setCurrentTimebarTickCriterionIndex(2);
+                int newWidth2 = timebarTickCriterionMap.get(2).getViewLength();
+                justScaledByPressingButton = true;
+                ViewGroup.LayoutParams params2 = getLayoutParams();
+                params2.width = newWidth2;
+                setLayoutParams(params2);
+                break;
+            case 3:
+                setCurrentTimebarTickCriterionIndex(3);
+                int newWidth3 = timebarTickCriterionMap.get(3).getViewLength();
+                justScaledByPressingButton = true;
+                ViewGroup.LayoutParams params3 = getLayoutParams();
+                params3.width = newWidth3;
+                setLayoutParams(params3);
+                break;
+            case 4:
+                setCurrentTimebarTickCriterionIndex(4);
+                int newWidth4 = timebarTickCriterionMap.get(4).getViewLength();
+                justScaledByPressingButton = true;
+                ViewGroup.LayoutParams params4 = getLayoutParams();
+                params4.width = newWidth4;
+                setLayoutParams(params4);
+                break;
+
+        }
+    }
+
     private float getAverageWidthForTwoCriterion(int criterion1Index, int criterion2Index) {
         int width1 = timebarTickCriterionMap.get(criterion1Index).getViewLength();
         int width2 = timebarTickCriterionMap.get(criterion2Index).getViewLength();
@@ -408,7 +460,7 @@ public class TimebarView extends View {
 
 
     private void resetToStandardWidth() {
-        setCurrentTimebarTickCriterionIndex(2);
+        setCurrentTimebarTickCriterionIndex(3);
         ViewGroup.LayoutParams params = getLayoutParams();
         params.width = timebarTickCriterionMap.get(currentTimebarTickCriterionIndex).getViewLength();
         setLayoutParams(params);
@@ -701,10 +753,16 @@ public class TimebarView extends View {
                 if (mode == DRAG) {
 
                     int dx = (int) (event.getRawX() - lastX);
+                    int dy = (int) (event.getRawY() - lastY);
                     if (dx == 0) {
-                        return true;
+                        return false;
                     }
-
+                    if (Math.abs(dx) > Math.abs(dy)) {
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                    } else {
+                        getParent().requestDisallowInterceptTouchEvent(false);
+                        return false;
+                    }
                     int top = getTop();
                     int left = getLeft() + dx;
                     int right = left + getWidth();
@@ -927,7 +985,7 @@ public class TimebarView extends View {
                         @Override
                         public void run() {
                             if (mOnBarMoveListener != null) {
-                                mOnBarMoveListener.OnBarMoveFinish(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), currentTimeInMillisecond);
+                                mOnBarMoveListener.onBarMove(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), currentTimeInMillisecond);
                             }
                         }
                     });
@@ -1009,6 +1067,14 @@ public class TimebarView extends View {
         mOnBarScaledListener = null;
         timebarPaint = null;
         scaleGestureDetector = null;
+    }
+
+    public int getIdTag() {
+        return idTag;
+    }
+
+    public void setIdTag(int idTag) {
+        this.idTag = idTag;
     }
 }
 
