@@ -1,1 +1,1 @@
-include ':app', ':timerulerslib', ':hellocharts-library'
+include ':app', ':timerulerslib'

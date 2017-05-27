@@ -1,18 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yongxiang.timerulers.MainActivity">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/timebar_zoom_out_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:src="@drawable/xcxd_not_applicable_pressed" />
+        <TextView
+            android:id="@+id/current_time_tv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:text="12:00:00"
+            android:shadowColor="#ffffff"
+            android:shadowRadius="5"
+            android:shadowDx="0"
+            android:shadowDy="0" />
+        <ImageView
+            android:id="@+id/timebar_zoom_in_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:src="@drawable/contacts_add_label" />
 
-</android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <timerulers.yongxiang.com.timerulerslib.views.TimebarView
+            android:id="@+id/my_timebar_view"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_height="100dp" />
+    </FrameLayout>
+
+
+</RelativeLayout>

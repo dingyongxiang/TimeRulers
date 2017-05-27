@@ -32,7 +32,7 @@ public class TimeRulerView extends View {
 
     public TimeRulerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TimeRulerView, defStyleAttr, 0);
+       /* TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TimeRulerView, defStyleAttr, 0);
         int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
@@ -45,12 +45,9 @@ public class TimeRulerView extends View {
             }
 
         }
-        a.recycle();
+        a.recycle();*/
     }
 
-    public TimeRulerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {

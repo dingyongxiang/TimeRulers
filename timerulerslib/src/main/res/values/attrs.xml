@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TimeRulerView">
-        <attr name="backgroundColor"  format="color"/>
         <attr name="linesColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="TimebarView">
+        <!--时间尺中间刻度条颜色-->
+        <attr name="middleCursorColor" format="color" />
+        <!--时间刻度文字颜色-->
+        <attr name="recordTextColor" format="color" />
+        <!--含有录像背景颜色-->
+        <attr name="recordBackgroundColor" format="color" />
+        <!--含有时间尺边框及刻度条颜色-->
+        <attr name="timebarColor" format="color" />
+
+
     </declare-styleable>
 
 </resources>
