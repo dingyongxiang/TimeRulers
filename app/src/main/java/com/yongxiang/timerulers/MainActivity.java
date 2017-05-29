@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 20, timebarRightEndPointTime));
         mTimebarView.setRecordDataExistTimeClipsList(recordDataList);
 
+
         mTimebarView.setOnBarMoveListener(new TimebarView.OnBarMoveListener() {
             @Override
             public void onBarMove(long screenLeftTime, long screenRightTime, long currentTime) {
@@ -113,10 +114,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        Date d = new Date(1495818022L * 1000l);
+      /*  Date d = new Date(1495818022L * 1000l);
         String texttime = zeroTimeFormat.format(d);
 
-        Log.d(TAG, "NOWTIME:" + texttime);
+        Log.d(TAG, "NOWTIME:" + texttime);*/
 
     }
 
@@ -153,6 +154,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mTimebarView.recycle();
+        //mTimebarView.recycle();
     }
 }
