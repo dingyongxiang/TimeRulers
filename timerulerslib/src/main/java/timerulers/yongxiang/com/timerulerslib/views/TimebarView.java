@@ -90,8 +90,6 @@ public class TimebarView extends View {
 
     private ScaleGestureDetector scaleGestureDetector;
 
-    private boolean notInited = true;
-
     private long currentTimeInMillisecond;
 
     private long mostLeftTimeInMillisecond;
@@ -209,7 +207,7 @@ public class TimebarView extends View {
 
             }
         }
-        invalidate();
+        postInvalidate();
     }
 
 
@@ -231,7 +229,7 @@ public class TimebarView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-
+        Log.d("TimebarView","version 1.6");
         path = new Path();
         TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.TimebarView, defStyleAttr, 0);
         int n = a.getIndexCount();
@@ -264,7 +262,6 @@ public class TimebarView extends View {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         mostLeftTimeInMillisecond = calendar.getTimeInMillis();
-        Log.d("TIMEBARVIEW", calendar.getTime() + "");
 
 
         //mostLeftTimeInMillisecond = currentTimeInMillisecond - 3 * 3600 * 1000;
@@ -276,7 +273,6 @@ public class TimebarView extends View {
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         mostRightTimeInMillisecond = calendar.getTimeInMillis();
         //mostRightTimeInMillisecond = currentTimeInMillisecond + 3 * 3600 * 1000;
-        Log.d("TIMEBARVIEW", calendar.getTime() + "");
 
 
         WHOLE_TIMEBAR_TOTAL_SECONDS = (mostRightTimeInMillisecond - mostLeftTimeInMillisecond) / 1000;
@@ -499,25 +495,34 @@ public class TimebarView extends View {
             VIEW_HEIGHT = heightSize;
         }
 
-
         setMeasuredDimension(measureWidth(widthMeasureSpec), VIEW_HEIGHT);
 
         if (justScaledByPressingButton && mOnBarScaledListener != null) {
             justScaledByPressingButton = false;
             mOnBarScaledListener.onBarScaleFinish(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), currentTimeInMillisecond);
         }
+
+
     }
 
-   /* @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        middle_cursor_bitmap_original_size = BitmapFactory.decodeResource(getResources(), R.drawable.lxhf_xian);
-        middle_cursor_bitmap = Bitmap.createScaledBitmap(middle_cursor_bitmap_original_size,
-                DeviceUtil.dip2px(MIDDLE_CURSOR_BITMAP_SCALED_WIDTH_IN_DP),
-                VIEW_HEIGHT,
-                false);
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Log.d("onSizeChanged", " w:" + w + " h:" + h + " oldw:" + oldh + " w:" + oldh);
+    }
 
-    }*/
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        Log.d("onLayout", "changed:" + changed + " left:" + left + " top:" + top + " right:" + right + " bottom:" + bottom);
+
+        if (currentTimeInMillisecond != System.currentTimeMillis() && left == 0)
+            layout((int) (0 - (currentTimeInMillisecond - mostLeftTimeInMillisecond) / 1000 * pixelsPerSecond),
+                    getTop(),
+                    getWidth() - (int) ((currentTimeInMillisecond - mostLeftTimeInMillisecond) / 1000 * pixelsPerSecond),
+                    getTop() + getHeight());
+        super.onLayout(changed, left, top, right, bottom);
+
+    }
 
     private int measureWidth(int widthMeasureSpec) {
         int measureMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -535,7 +540,7 @@ public class TimebarView extends View {
             default:
                 break;
         }
-
+        Log.d("measureWidth", "measureMode:" + measureMode + "measureSize:" + measureSize + " result" + result);
         return result;
     }
 
@@ -566,6 +571,8 @@ public class TimebarView extends View {
             return;
         }*/
 
+        Log.d("onDraw", "onDraw");
+
         pixelsPerSecond = (float) (getWidth() - screenWidth) / (float) WHOLE_TIMEBAR_TOTAL_SECONDS;
 
 
@@ -586,10 +593,6 @@ public class TimebarView extends View {
             }
         }
 
-        layout((int) (0 - (currentTimeInMillisecond - mostLeftTimeInMillisecond) / 1000 * pixelsPerSecond),
-                getTop(),
-                getWidth() - (int) ((currentTimeInMillisecond - mostLeftTimeInMillisecond) / 1000 * pixelsPerSecond),
-                getTop() + getHeight());
 
         // 画刻度及时间
         drawTick(canvas);
@@ -600,6 +603,11 @@ public class TimebarView extends View {
 
         // 画中间刻度
         drawmiddleCursor(canvas);
+
+        layout((int) (0 - (currentTimeInMillisecond - mostLeftTimeInMillisecond) / 1000 * pixelsPerSecond),
+                getTop(),
+                getWidth() - (int) ((currentTimeInMillisecond - mostLeftTimeInMillisecond) / 1000 * pixelsPerSecond),
+                getTop() + getHeight());
 
 
     }
@@ -761,17 +769,9 @@ public class TimebarView extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (mode == DRAG) {
-
                     int dx = (int) (event.getRawX() - lastX);
-                    int dy = (int) (event.getRawY() - lastY);
                     if (dx == 0) {
                         return false;
-                    }
-                    if (Math.abs(dx) > Math.abs(dy)) {
-                        getParent().requestDisallowInterceptTouchEvent(true);
-                    } else {
-                        getParent().requestDisallowInterceptTouchEvent(false);
-                        return true;
                     }
                     int top = getTop();
                     int left = getLeft() + dx;
@@ -796,7 +796,6 @@ public class TimebarView extends View {
                     int timeBarLength = getWidth() - screenWidth;
                     currentTimeInMillisecond = mostLeftTimeInMillisecond + deltaX * WHOLE_TIMEBAR_TOTAL_SECONDS * 1000 / timeBarLength;
 
-
                     if (mOnBarMoveListener != null) {
                         mOnBarMoveListener.onBarMove(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), currentTimeInMillisecond);
                     }
@@ -804,6 +803,19 @@ public class TimebarView extends View {
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
+                currentTimeInMillisecond = lastcurrentTimeInMillisecond;
+                checkVideo = lastCheckState;
+                if (mOnBarMoveListener != null) {
+                    mOnBarMoveListener.onBarMove(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), currentTimeInMillisecond);
+                }
+                invalidate();
+                if (lastMoveState) {
+                    if (handler.hasMessages(MOVEING))
+                        handler.removeMessages(MOVEING);
+                    handler.sendEmptyMessageDelayed(MOVEING, 1100);
+                }
+                mode = NONE;
+                break;
             case MotionEvent.ACTION_UP:
                 if (mode == DRAG) {
                     int deltaX_up = (0 - getLeft());
@@ -819,14 +831,17 @@ public class TimebarView extends View {
                                 mOnBarMoveListener.onBarMove(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), -1);
                             }
                         } else {
-
+                            if (mOnBarMoveListener != null) {
+                                mOnBarMoveListener.OnBarMoveFinish(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), currentTimeInMillisecond);
+                            }
+                        }
+                    } else {
+                        if (mOnBarMoveListener != null) {
+                            mOnBarMoveListener.OnBarMoveFinish(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), currentTimeInMillisecond);
                         }
                     }
-                    invalidate();
-                    if (mOnBarMoveListener != null) {
-                        mOnBarMoveListener.OnBarMoveFinish(getScreenLeftTimeInMillisecond(), getScreenRightTimeInMillisecond(), currentTimeInMillisecond);
-                    }
 
+                    invalidate();
                     if (lastMoveState) {
                         if (handler.hasMessages(MOVEING))
                             handler.removeMessages(MOVEING);
@@ -840,32 +855,6 @@ public class TimebarView extends View {
 
 
         return true;
-    }
-
-    private int mLastX = 0;
-    private int mLastY = 0;
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                getParent().requestDisallowInterceptTouchEvent(true);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                int deltaX = x - mLastX;
-                int deltaY = y - mLastY;
-                if (Math.abs(deltaX) < Math.abs(deltaY))
-                    getParent().requestDisallowInterceptTouchEvent(false);
-                return false;
-
-        }
-        mLastX = x;
-        mLastY = y;
-        return super.dispatchTouchEvent(event);
     }
 
     public void scaleByPressingButton(boolean zoomIn) {

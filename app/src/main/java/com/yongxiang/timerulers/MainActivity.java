@@ -12,7 +12,6 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import timerulers.yongxiang.com.timerulerslib.views.RecordDataExistTimeSegment;
@@ -75,12 +74,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTimebarView.initTimebarLengthAndPosition(timebarLeftEndPointTime,
                 timebarRightEndPointTime - 1000, currentRealDateTime);
 
-        List<RecordDataExistTimeSegment> recordDataList = new ArrayList<>();
-        recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime - ONE_HOUR_IN_MS * 1, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 3));
+        final List<RecordDataExistTimeSegment> recordDataList = new ArrayList<>();
+       /* recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime - ONE_HOUR_IN_MS * 1, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 3));
         recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 4, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 8));
         recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 12, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 19));
-        recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 20, timebarRightEndPointTime));
-        mTimebarView.setRecordDataExistTimeClipsList(recordDataList);
+        recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 20, timebarRightEndPointTime));*/
+
+        recordDataList.add(new RecordDataExistTimeSegment(1496160000000l, 1496185833000l));
+        recordDataList.add(new RecordDataExistTimeSegment(1496185833000l, 1496211081000l));
+        mTimebarView.openMove();
+        mTimebarView.checkVideo(true);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    mTimebarView.setRecordDataExistTimeClipsList(recordDataList);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
 
         mTimebarView.setOnBarMoveListener(new TimebarView.OnBarMoveListener() {
@@ -124,8 +139,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        mTimebarView.openMove();
-        mTimebarView.checkVideo(true);
+       /* mTimebarView.openMove();
+        mTimebarView.checkVideo(true);*/
     }
 
     @Override
@@ -154,6 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //mTimebarView.recycle();
+        mTimebarView.recycle();
     }
 }
