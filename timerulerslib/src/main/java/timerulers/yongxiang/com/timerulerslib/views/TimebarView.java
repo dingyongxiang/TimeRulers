@@ -170,6 +170,13 @@ public class TimebarView extends View {
         arrangeRecordDataExistTimeClipsIntoMap(recordDataExistTimeClipsList);
     }
 
+    public void setMostLeftTimeInMillisecond(long mostLeftTimeInMillisecond) {
+        this.mostLeftTimeInMillisecond = mostLeftTimeInMillisecond;
+    }
+
+    public void setMostRightTimeInMillisecond(long mostRightTimeInMillisecond) {
+        this.mostRightTimeInMillisecond = mostRightTimeInMillisecond;
+    }
 
     public long getMostLeftTimeInMillisecond() {
         return mostLeftTimeInMillisecond;
