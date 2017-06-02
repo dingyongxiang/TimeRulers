@@ -6,34 +6,72 @@
     tools:context=".MainActivity">
 
 
+    <RelativeLayout
+        android:id="@+id/remoteplayback_timebar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:visibility="visible">
+
+        <com.videogo.widget.TimeBarHorizontalScrollView
+            android:id="@+id/remoteplayback_timebar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadingEdge="none"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <timerulers.yongxiang.com.timerulerslib.views.RemoteFileTimeBar
+                    android:id="@+id/remoteplayback_file_time_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="77dp"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+        </com.videogo.widget.TimeBarHorizontalScrollView>
+        <TextView
+            android:id="@+id/remoteplayback_time_tv"
+            android:layout_width="87dp"
+            android:layout_height="87dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/palyback_time_bg"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="00:00:00"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/zoom_layout"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/timebar_zoom_out_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:clickable="true"
             android:src="@drawable/xcxd_not_applicable_pressed" />
+
         <TextView
             android:id="@+id/current_time_tv"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="#000000"
-            android:text="12:00:00"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:shadowColor="#ffffff"
-            android:shadowRadius="5"
             android:shadowDx="0"
-            android:shadowDy="0" />
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="12:00:00"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
         <ImageView
             android:id="@+id/timebar_zoom_in_btn"
             android:layout_width="40dp"
@@ -45,46 +83,47 @@
     </LinearLayout>
 
     <LinearLayout
-        android:gravity="center"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/zoom_layout"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/zoom_layout"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="36dp">
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/day"
-            android:text="天"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="天" />
 
         <Button
             android:id="@+id/hour"
-            android:text="小时"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="小时" />
 
         <Button
             android:id="@+id/minute"
-            android:text="分钟"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="分钟" />
     </LinearLayout>
 
     <FrameLayout
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <timerulers.yongxiang.com.timerulerslib.views.TimebarView
             android:id="@+id/my_timebar_view"
-            android:layout_gravity="bottom"
-            android:layout_alignParentBottom="true"
-            android:background="#ffffff"
             android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             android:layout_marginBottom="10dp"
-            android:layout_height="100dp" />
+            android:background="#ffffff" />
     </FrameLayout>
 
 
