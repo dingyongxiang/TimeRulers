@@ -5,43 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <RelativeLayout
-        android:id="@+id/remoteplayback_timebar_rl"
-        android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:visibility="visible">
-
-        <com.videogo.widget.TimeBarHorizontalScrollView
-            android:id="@+id/remoteplayback_timebar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fadingEdge="none"
-            android:scrollbars="none">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <timerulers.yongxiang.com.timerulerslib.views.RemoteFileTimeBar
-                    android:id="@+id/remoteplayback_file_time_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="77dp"
-                    android:layout_alignParentTop="true" />
-            </RelativeLayout>
-        </com.videogo.widget.TimeBarHorizontalScrollView>
-        <TextView
-            android:id="@+id/remoteplayback_time_tv"
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/palyback_time_bg"
-            android:gravity="center"
-            android:onClick="onClick"
-            android:text="00:00:00"
-            android:textColor="#FFFFFF" />
-    </RelativeLayout>
-
     <LinearLayout
         android:id="@+id/zoom_layout"
         android:layout_width="match_parent"

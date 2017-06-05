@@ -1,20 +1,13 @@
 package com.yongxiang.timerulers;
 
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.videogo.util.LocalInfo;
-import com.videogo.widget.TimeBarHorizontalScrollView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,10 +15,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import timerulers.yongxiang.com.timerulerslib.views.RecordDataExistTimeSegment;
-import timerulers.yongxiang.com.timerulerslib.views.RemoteFileTimeBar;
 import timerulers.yongxiang.com.timerulerslib.views.TimebarView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener ,TimeBarHorizontalScrollView.TimeScrollBarScrollListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = MainActivity.class.getSimpleName();
     private TextView currentTimeTextView;
     private ImageView zoomInButton, zoomOutButton;
@@ -46,13 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
-
-    private RelativeLayout mRemotePlayBackTimeBarRl = null;
-    private TimeBarHorizontalScrollView mRemotePlayBackTimeBar = null;
-    private RemoteFileTimeBar mRemoteFileTimeBar = null;
-    private TextView mRemotePlayBackTimeTv = null;
-    private LocalInfo mLocalInfo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,22 +157,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        /* mTimebarView.openMove();
         mTimebarView.checkVideo(true);*/
 
-        // 获取配置信息操作对象
-        mLocalInfo = LocalInfo.getInstance();
-        // 获取屏幕参数
-        DisplayMetrics metric = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metric);
-        //mLocalInfo.setScreenWidthHeight(metric.widthPixels, metric.heightPixels);
-        // mLocalInfo.setNavigationBarHeight((int) Math.ceil(25 * getResources().getDisplayMetrics().density));
-
-        mRemotePlayBackTimeBarRl = (RelativeLayout) findViewById(R.id.remoteplayback_timebar_rl);
-        mRemotePlayBackTimeBar = (TimeBarHorizontalScrollView) findViewById(R.id.remoteplayback_timebar);
-        mRemotePlayBackTimeBar.setTimeScrollBarScrollListener(this);
-        mRemotePlayBackTimeBar.smoothScrollTo(0, 0);
-        mRemoteFileTimeBar = (RemoteFileTimeBar) findViewById(R.id.remoteplayback_file_time_bar);
-        mRemoteFileTimeBar.setX(0, metric.widthPixels * 6);
-        mRemotePlayBackTimeTv = (TextView) findViewById(R.id.remoteplayback_time_tv);
-        mRemotePlayBackTimeTv.setText("00:00:00");
 
 
     }
@@ -220,32 +189,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         mTimebarView.recycle();
-    }
-
-    /**
-     * 屏幕当前方向
-     */
-    private int mOrientation = Configuration.ORIENTATION_PORTRAIT;
-    private long mPlayTime = 0;
-
-    @Override
-    public void onScrollChanged(int i, int i1, int i2, int i3, HorizontalScrollView horizontalScrollView) {
-
-        Calendar startCalendar = mRemoteFileTimeBar.pos2Calendar(i, mOrientation);
-        if (startCalendar != null) {
-            mPlayTime = startCalendar.getTimeInMillis();
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            mRemotePlayBackTimeTv.setText(sdf.format(mPlayTime));
-        }
-    }
-
-    @Override
-    public void onScrollStart(HorizontalScrollView horizontalScrollView) {
-
-    }
-
-    @Override
-    public void onScrollStop(HorizontalScrollView horizontalScrollView) {
-
     }
 }

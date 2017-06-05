@@ -1111,6 +1111,14 @@ public class TimebarView extends View {
         moThread = null;
     }
 
+    public boolean isMoveing() {
+        return moveFlag;
+    }
+
+    public void setMoveFlag(boolean moveFlag) {
+        this.moveFlag = moveFlag;
+    }
+
     private boolean readyCheck = false;
 
     /*
