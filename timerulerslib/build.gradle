@@ -5,7 +5,7 @@ publish {
     userOrg = 'dingyongxiang'
     groupId = 'com.dingyongxiang.library'
     artifactId = 'timebarview'
-    publishVersion = '1.5'
+    publishVersion = '1.8'
     desc = 'TimebarView'
     website = 'https://github.com/dingyongxiang/TimeRulers'
 }
@@ -15,7 +15,7 @@ android {
     buildToolsVersion "25.0.3"
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName version
@@ -37,9 +37,4 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
 }
