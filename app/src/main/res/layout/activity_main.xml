@@ -13,12 +13,12 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
+        <Button
             android:id="@+id/timebar_zoom_out_btn"
-            android:layout_width="40dp"
+            android:layout_width="80dp"
             android:layout_height="40dp"
             android:clickable="true"
-            android:src="@drawable/xcxd_not_applicable_pressed" />
+            android:text="缩小" />
 
         <TextView
             android:id="@+id/current_time_tv"
@@ -35,12 +35,12 @@
             android:textColor="#000000"
             android:textSize="18sp" />
 
-        <ImageView
+        <Button
             android:id="@+id/timebar_zoom_in_btn"
-            android:layout_width="40dp"
+            android:layout_width="80dp"
             android:layout_height="40dp"
             android:clickable="true"
-            android:src="@drawable/contacts_add_label" />
+            android:text="放大" />
 
 
     </LinearLayout>

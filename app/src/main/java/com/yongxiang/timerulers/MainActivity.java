@@ -20,7 +20,7 @@ import timerulers.yongxiang.com.timerulerslib.views.TimebarView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = MainActivity.class.getSimpleName();
     private TextView currentTimeTextView;
-    private ImageView zoomInButton, zoomOutButton;
+    private Button zoomInButton, zoomOutButton;
     private TimebarView mTimebarView;
 
     private Button mDayBt;
@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mTimebarView = (TimebarView) findViewById(R.id.my_timebar_view);
         currentTimeTextView = (TextView) findViewById(R.id.current_time_tv);
-        zoomInButton = (ImageView) findViewById(R.id.timebar_zoom_in_btn);
-        zoomOutButton = (ImageView) findViewById(R.id.timebar_zoom_out_btn);
+        zoomInButton = (Button) findViewById(R.id.timebar_zoom_in_btn);
+        zoomOutButton = (Button) findViewById(R.id.timebar_zoom_out_btn);
         mDayBt = (Button) findViewById(R.id.day);
         mHourBt = (Button) findViewById(R.id.hour);
         mMinuteBt = (Button) findViewById(R.id.minute);
@@ -83,22 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 12, timebarLeftEndPointTime + ONE_HOUR_IN_MS * 19));
         recordDataList.add(new RecordDataExistTimeSegment(timebarLeftEndPointTime + ONE_HOUR_IN_MS * 20, timebarRightEndPointTime));
 
-       /* recordDataList.add(new RecordDataExistTimeSegment(1496160000000l, 1496185833000l));
-        recordDataList.add(new RecordDataExistTimeSegment(1496185833000l, 1496211081000l));*/
+        mTimebarView.setRecordDataExistTimeClipsList(recordDataList);
+
         mTimebarView.openMove();
         mTimebarView.checkVideo(true);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                    mTimebarView.setRecordDataExistTimeClipsList(recordDataList);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
 
 
         mTimebarView.setOnBarMoveListener(new TimebarView.OnBarMoveListener() {
@@ -108,15 +96,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(MainActivity.this, "当前时刻没有录像", Toast.LENGTH_SHORT).show();
                 }
                 currentTimeTextView.setText(zeroTimeFormat.format(currentTime));
-                Log.d(TAG, "onBarMove()");
             }
 
             @Override
             public void OnBarMoveFinish(long screenLeftTime, long screenRightTime, long currentTime) {
                 currentTimeTextView.setText(zeroTimeFormat.format(currentTime));
-                Toast.makeText(MainActivity.this, "停止移动", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "OnBarMoveFinish()");
-                mTimebarView.setDrag(false);
             }
         });
 
@@ -138,27 +122,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-
-      /*  Date d = new Date(1495818022L * 1000l);
-        String texttime = zeroTimeFormat.format(d);
-
-        Log.d(TAG, "NOWTIME:" + texttime);*/
-
-
-
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // mTimebarView.openMove();
-       /* mTimebarView.openMove();
-        mTimebarView.checkVideo(true);*/
-
-
-
     }
 
 
