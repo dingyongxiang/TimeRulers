@@ -1164,10 +1164,14 @@ public class TimebarView extends View {
 
     public void recycle() {
         closeMove();
-        recordDataExistTimeClipsList.clear();
-        recordDataExistTimeClipsList = null;
-        recordDataExistTimeClipsListMap.clear();
-        recordDataExistTimeClipsListMap = null;
+        if (recordDataExistTimeClipsList != null) {
+            recordDataExistTimeClipsList.clear();
+            recordDataExistTimeClipsList = null;
+        }
+        if (recordDataExistTimeClipsListMap != null) {
+            recordDataExistTimeClipsListMap.clear();
+            recordDataExistTimeClipsListMap = null;
+        }
         mOnBarMoveListener = null;
         mOnBarScaledListener = null;
         timebarPaint = null;

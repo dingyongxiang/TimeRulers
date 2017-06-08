@@ -5,7 +5,7 @@ publish {
     userOrg = 'dingyongxiang'
     groupId = 'com.dingyongxiang.library'
     artifactId = 'timebarview'
-    publishVersion = '1.8'
+    publishVersion = '1.9'
     desc = 'TimebarView'
     website = 'https://github.com/dingyongxiang/TimeRulers'
 }
