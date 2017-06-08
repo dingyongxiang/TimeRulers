@@ -1,5 +1,5 @@
 # TimeRulers
- ======
+
   一个可以缩放的时间轴 类似萤石云的录像进度条
 
  ![](./timebar_scale.gif)
