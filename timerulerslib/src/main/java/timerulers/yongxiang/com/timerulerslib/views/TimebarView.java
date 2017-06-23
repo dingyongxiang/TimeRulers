@@ -1131,9 +1131,7 @@ public class TimebarView extends View {
     }
 
     /*
-    *
     * 返回下一个录像开始点
-    *
     * */
     private long locationVideo() {
         if (recordDataExistTimeClipsList == null)
@@ -1146,7 +1144,6 @@ public class TimebarView extends View {
                 return nextStartTime;
             }
         }
-
         return -1;
     }
 
