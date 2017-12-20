@@ -88,9 +88,9 @@
   ```
 
  - Download
-  ```
+ ```
   
-   dependencies {
+    dependencies {
       compile 'com.dingyongxiang.library:timebarview:1.9'
-  }
+    }
   ```
