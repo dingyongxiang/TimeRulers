@@ -90,13 +90,6 @@
   Download
   ----
   Gradle：
-  ```
-  allprojects {
-  		repositories {
-  			 maven { url 'https://dl.bintray.com/dingyongxiang/maven/' }
-  		}
-  }
-
   dependencies {
       compile 'com.dingyongxiang.library:timebarview:1.9'
   }
